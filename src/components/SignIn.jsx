@@ -5,6 +5,7 @@ import { Pressable, View, StyleSheet } from 'react-native'
 import Constants from 'expo-constants'
 import theme from '../theme'
 import * as yup from 'yup'
+import useSignIn from '../hooks/useSignIn'
 
 const styles = StyleSheet.create({
   submitButton: {
@@ -34,7 +35,18 @@ const validationSchema = yup.object().shape({
 })
 
 const SignIn = () => {
-  const onSubmit = (values) => console.log(values)
+  const [signIn] = useSignIn()
+
+  const onSubmit = async (values) => {
+    const { username, password } = values
+
+    try {
+      const { data } = await signIn({ username, password })
+      console.log(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <Formik
