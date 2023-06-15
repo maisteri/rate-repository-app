@@ -9,10 +9,7 @@ const styles = StyleSheet.create({
 
 const AppBarTab = (props) => {
   return (
-    <Pressable
-      style={styles.item}
-      onPress={() => console.log('me was pressed')}
-    >
+    <Pressable style={styles.item} onPress={props.onPress}>
       {props.children}
     </Pressable>
   )

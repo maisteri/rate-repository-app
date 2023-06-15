@@ -6,6 +6,8 @@ import Constants from 'expo-constants'
 import theme from '../theme'
 import * as yup from 'yup'
 import useSignIn from '../hooks/useSignIn'
+import { Navigate } from 'react-router-native'
+import { useState } from 'react'
 
 const styles = StyleSheet.create({
   submitButton: {
@@ -36,17 +38,20 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const [signIn] = useSignIn()
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const onSubmit = async (values) => {
     const { username, password } = values
 
     try {
       const { data } = await signIn({ username, password })
-      console.log(data)
+      setLoggedIn(true)
     } catch (e) {
       console.log(e)
     }
   }
+  //console.log(loggedIn)
+  if (loggedIn) return <Navigate to='/' replace />
 
   return (
     <Formik

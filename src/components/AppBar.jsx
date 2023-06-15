@@ -4,6 +4,9 @@ import Constants from 'expo-constants'
 import AppBarTab from './AppBarTab'
 import theme from '../theme'
 import Text from './Text'
+import useUserInfo from '../hooks/useUserInfo'
+import { useAuthStorage } from '../hooks/useAuthStorage'
+import { useApolloClient } from '@apollo/client'
 
 const styles = StyleSheet.create({
   container: {
@@ -18,6 +21,16 @@ const styles = StyleSheet.create({
 })
 
 const AppBar = () => {
+  const { me } = useUserInfo()
+  const apolloClient = useApolloClient()
+  const authStorage = useAuthStorage()
+
+  const onLogout = () => {
+    authStorage.removeAccessToken()
+    apolloClient.resetStore()
+  }
+
+  console.log(me?.username)
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -28,13 +41,21 @@ const AppBar = () => {
             </Text>
           </Link>
         </AppBarTab>
-        <AppBarTab>
-          <Link to='/signin'>
+        {me?.username ? (
+          <AppBarTab onPress={onLogout}>
             <Text color='textAppBar' fontWeight='bold' fontSize='subheading'>
-              Sign In
+              Sign Out
             </Text>
-          </Link>
-        </AppBarTab>
+          </AppBarTab>
+        ) : (
+          <AppBarTab>
+            <Link to='/signin'>
+              <Text color='textAppBar' fontWeight='bold' fontSize='subheading'>
+                Sign In
+              </Text>
+            </Link>
+          </AppBarTab>
+        )}
       </ScrollView>
     </View>
   )
