@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = (props) => {
   return (
-    <>
+    <View testID='repositoryItem'>
       <View style={styles.container}>
         <Image style={styles.pic} source={{ uri: props.ownerAvatarUrl }} />
         <View style={styles.basicInfo}>
@@ -49,7 +49,7 @@ const RepositoryItem = (props) => {
         <StatisticsItem figure={props.reviewCount} label='Reviews' />
         <StatisticsItem figure={props.ratingAverage} label='Rating' />
       </View>
-    </>
+    </View>
   )
 }
 

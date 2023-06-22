@@ -26,16 +26,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const initialValues = {
-  username: '',
-  password: '',
-}
-
-const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
-})
-
 const SignIn = () => {
   const [signIn] = useSignIn()
   const [loggedIn, setLoggedIn] = useState(false)
@@ -44,14 +34,28 @@ const SignIn = () => {
     const { username, password } = values
 
     try {
-      const { data } = await signIn({ username, password })
+      await signIn({ username, password })
       setLoggedIn(true)
     } catch (e) {
       console.log(e)
     }
   }
-  //console.log(loggedIn)
+
   if (loggedIn) return <Navigate to='/' replace />
+
+  return <SignInContainer onSubmit={onSubmit} />
+}
+
+export const SignInContainer = ({ onSubmit }) => {
+  const initialValues = {
+    username: '',
+    password: '',
+  }
+
+  const validationSchema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
+  })
 
   return (
     <Formik
