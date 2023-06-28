@@ -23,6 +23,7 @@ const theme = {
   fontWeights: {
     normal: '400',
     bold: '700',
+    superBold: '900',
   },
 }
 

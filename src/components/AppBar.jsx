@@ -16,7 +16,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.appBarBackground,
     flexDirection: 'row',
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
+  },
+  tabContainer: {
+    borderWidth: 2,
+    borderColor: '#4411FF',
   },
 })
 
@@ -42,19 +46,49 @@ const AppBar = () => {
           </Link>
         </AppBarTab>
         {me?.username ? (
-          <AppBarTab onPress={onLogout}>
-            <Text color='textAppBar' fontWeight='bold' fontSize='subheading'>
-              Sign Out
-            </Text>
-          </AppBarTab>
-        ) : (
-          <AppBarTab>
-            <Link to='/signin'>
+          <>
+            <AppBarTab>
+              <Link to='/review'>
+                <Text
+                  color='textAppBar'
+                  fontWeight='bold'
+                  fontSize='subheading'
+                >
+                  Create a review
+                </Text>
+              </Link>
+            </AppBarTab>
+            <AppBarTab onPress={onLogout}>
               <Text color='textAppBar' fontWeight='bold' fontSize='subheading'>
-                Sign In
+                Sign Out
               </Text>
-            </Link>
-          </AppBarTab>
+            </AppBarTab>
+          </>
+        ) : (
+          <>
+            <AppBarTab>
+              <Link to='/signin'>
+                <Text
+                  color='textAppBar'
+                  fontWeight='bold'
+                  fontSize='subheading'
+                >
+                  Sign In
+                </Text>
+              </Link>
+            </AppBarTab>
+            <AppBarTab>
+              <Link to='/signup'>
+                <Text
+                  color='textAppBar'
+                  fontWeight='bold'
+                  fontSize='subheading'
+                >
+                  Sign Up
+                </Text>
+              </Link>
+            </AppBarTab>
+          </>
         )}
       </ScrollView>
     </View>

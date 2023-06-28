@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   },
+  fontWeightSuperBold: {
+    fontWeight: theme.fontWeights.superBold,
+  },
 })
 
 const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
@@ -38,6 +41,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'error' && styles.colorError,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
+    fontWeight === 'superBold' && styles.fontWeightSuperBold,
     style,
   ]
 

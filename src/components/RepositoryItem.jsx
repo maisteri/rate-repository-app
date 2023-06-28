@@ -7,7 +7,7 @@ import StatisticsItem from './StatisticsItem'
 const styles = StyleSheet.create({
   pic: {
     width: 66,
-    height: 58,
+    height: 66,
   },
   basicInfo: {
     paddingLeft: Constants.statusBarHeight / 2,

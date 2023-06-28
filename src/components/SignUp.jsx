@@ -3,26 +3,28 @@ import { Formik } from 'formik'
 import FormikTextInput from './FormikTextInput'
 import { View } from 'react-native'
 import * as yup from 'yup'
+import useSignUp from '../hooks/useSignUp'
 import useSignIn from '../hooks/useSignIn'
-import { Navigate } from 'react-router-native'
-import { useState } from 'react'
+import { useNavigate } from 'react-router-native'
 
-const SignIn = () => {
+const SignUp = () => {
+  const [signUp] = useSignUp()
   const [signIn] = useSignIn()
-  const [loggedIn, setLoggedIn] = useState(false)
+
+  const navigate = useNavigate()
 
   const onSubmit = async (values) => {
     const { username, password } = values
+    console.log(values)
 
     try {
+      await signUp({ username, password })
       await signIn({ username, password })
-      setLoggedIn(true)
+      navigate('/')
     } catch (e) {
       console.log(e)
     }
   }
-
-  if (loggedIn) return <Navigate to='/' replace />
 
   return <SignInContainer onSubmit={onSubmit} />
 }
@@ -34,8 +36,14 @@ export const SignInContainer = ({ onSubmit }) => {
   }
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required('Username is required'),
-    password: yup.string().required('Password is required'),
+    username: yup.string().min(5).max(30).required('Username is required'),
+    password: yup.string().min(5).max(50).required('Password is required'),
+    passwordConfirmation: yup
+      .string()
+      .min(5)
+      .max(50)
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .required('Password is required'),
   })
 
   return (
@@ -54,9 +62,14 @@ const LoginForm = ({ onSubmit }) => {
     <View>
       <FormikTextInput name='username' placeholder='Username' />
       <FormikTextInput name='password' placeholder='Password' secureTextEntry />
+      <FormikTextInput
+        name='passwordConfirmation'
+        placeholder='Password confirmation'
+        secureTextEntry
+      />
       <BigBlueButton onPress={onSubmit} buttonText='Sign In' />
     </View>
   )
 }
 
-export default SignIn
+export default SignUp

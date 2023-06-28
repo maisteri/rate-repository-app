@@ -3,7 +3,7 @@ import Constants from 'expo-constants'
 
 const styles = StyleSheet.create({
   item: {
-    paddingRight: Constants.statusBarHeight / 2,
+    paddingRight: Constants.statusBarHeight,
   },
 })
 
