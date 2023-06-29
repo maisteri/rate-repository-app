@@ -4,7 +4,9 @@ import theme from '../theme'
 import useRepositories from '../hooks/useRepositories'
 import { useNavigate } from 'react-router-native'
 import RepoListSorter from './RepoListSorter'
+import SearchMenuBar from './SearchMenuBar'
 import { useState } from 'react'
+import { useDebounce } from 'use-debounce'
 
 const styles = StyleSheet.create({
   separator: {
@@ -19,6 +21,8 @@ export const RepositoryListContainer = ({
   repositories,
   setOrderBy,
   setOrderDirection,
+  searchKeyword,
+  setSearchKeyword,
 }) => {
   const navigate = useNavigate()
 
@@ -32,6 +36,10 @@ export const RepositoryListContainer = ({
 
   return (
     <>
+      <SearchMenuBar
+        searchKeyword={searchKeyword}
+        setSearchKeyword={setSearchKeyword}
+      />
       <RepoListSorter
         setOrderBy={setOrderBy}
         setOrderDirection={setOrderDirection}
@@ -53,12 +61,18 @@ export const RepositoryListContainer = ({
 const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState('CREATED_AT')
   const [orderDirection, setOrderDirection] = useState('DESC')
-  const { repositories } = useRepositories(orderBy, orderDirection)
+
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const [value] = useDebounce(searchKeyword, 500)
+
+  const { repositories } = useRepositories(orderBy, orderDirection, value)
   return (
     <RepositoryListContainer
       repositories={repositories}
       setOrderBy={setOrderBy}
       setOrderDirection={setOrderDirection}
+      setSearchKeyword={setSearchKeyword}
+      searchKeyword={searchKeyword}
     />
   )
 }
