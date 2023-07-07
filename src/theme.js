@@ -6,6 +6,7 @@ const theme = {
     textSecondary: '#586069',
     textAppBar: '#FFFFFF',
     primary: '#0366d6',
+    danger: '#ff0e0e',
     error: '#d73a4a',
     appBarBackground: '#404040',
     menuBarBackGround: '#cccccc',

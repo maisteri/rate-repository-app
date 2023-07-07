@@ -58,6 +58,17 @@ const AppBar = () => {
                 </Text>
               </Link>
             </AppBarTab>
+            <AppBarTab>
+              <Link to='/myreviews'>
+                <Text
+                  color='textAppBar'
+                  fontWeight='bold'
+                  fontSize='subheading'
+                >
+                  My Reviews
+                </Text>
+              </Link>
+            </AppBarTab>
             <AppBarTab onPress={onLogout}>
               <Text color='textAppBar' fontWeight='bold' fontSize='subheading'>
                 Sign Out
