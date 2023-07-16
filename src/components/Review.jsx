@@ -16,7 +16,6 @@ const Review = () => {
       text,
       rating: Number(rating),
     }
-    console.log(realValues)
     try {
       const { data } = await review(realValues)
       const repoId = data.createReview.repositoryId

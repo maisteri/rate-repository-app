@@ -9,11 +9,15 @@ import ReviewItem from './ReviewItem'
 
 const RepositorySingleView = () => {
   const { id } = useParams()
-  const { repository, loading } = useRepository(id)
+  const { repository, loading, fetchMore } = useRepository({ id, first: 6 })
 
   if (loading) return null
 
   const reviews = repository.reviews.edges.map((edge) => edge.node)
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   return (
     <>
@@ -21,6 +25,8 @@ const RepositorySingleView = () => {
         data={reviews}
         renderItem={({ item }) => <ReviewItem {...item} />}
         keyExtractor={({ id }) => id}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
         ItemSeparatorComponent={ItemSeparator}
         ListHeaderComponent={() => (
           <>

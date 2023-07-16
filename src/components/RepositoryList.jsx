@@ -19,6 +19,7 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 export const RepositoryListContainer = ({
   repositories,
+  onEndReach,
   setOrderBy,
   setOrderDirection,
   searchKeyword,
@@ -46,6 +47,8 @@ export const RepositoryListContainer = ({
       />
       <FlatList
         data={repositoryNodes}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
         ItemSeparatorComponent={ItemSeparator}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -65,10 +68,21 @@ const RepositoryList = () => {
   const [searchKeyword, setSearchKeyword] = useState('')
   const [value] = useDebounce(searchKeyword, 500)
 
-  const { repositories } = useRepositories(orderBy, orderDirection, value)
+  const { repositories, fetchMore } = useRepositories({
+    orderBy,
+    orderDirection,
+    searchKeyword: value,
+    first: 6,
+  })
+
+  const onEndReach = () => {
+    fetchMore()
+  }
+
   return (
     <RepositoryListContainer
       repositories={repositories}
+      onEndReach={onEndReach}
       setOrderBy={setOrderBy}
       setOrderDirection={setOrderDirection}
       setSearchKeyword={setSearchKeyword}
